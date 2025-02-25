@@ -58,7 +58,7 @@ public class CounterPuncher extends Hero {
                 System.out.println(ConsoleColors.BLUE_BOLD + "You counter perfectly for " + specialDamage + " damage!");
                 break;
 
-            case 3: // Consumable use
+            case 3:
                 if (this.inventory.isEmpty()) {
                     System.out.println("No special moves available!");
                     return;

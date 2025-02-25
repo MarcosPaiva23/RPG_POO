@@ -7,6 +7,7 @@ import Itens.HeroItem;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import Audio.Audio;
 
 import static java.lang.Thread.sleep;
 
@@ -229,12 +230,11 @@ public class Jogo {
      */
     private boolean startBoxingMatch(Hero player, NPC opponent) {
         int currentRound = 1;
-        boolean specialAttackAvailable = true; // Special attack is available at the start of the fight
+        boolean specialAttackAvailable = true;
 
         System.out.println("\n=== FIGHT START ===");
-
         try {
-            sleep(2000);  // 2 second pause before fight starts
+            sleep(2000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -256,24 +256,23 @@ public class Jogo {
                     Thread.currentThread().interrupt();
                 }
 
-                // Store the updated specialAttackAvailable value
                 specialAttackAvailable = playerTurn(player, opponent, specialAttackAvailable);
 
                 if (opponent.getHp() <= 0) {
-                    return true; // Player wins
+                    return true;
                 }
 
                 opponentTurn(opponent, player);
 
                 if (player.getHp() <= 0) {
-                    return false; // Player loses
+                    return false;
                 }
 
                 displayFightStats(player, opponent);
             }
 
             if (player.getHp() <= 0 || opponent.getHp() <= 0) {
-                break; // Exit loop if someone is knocked out
+                break;
             }
 
             currentRound++;
@@ -390,9 +389,9 @@ public class Jogo {
      */
     private void endRound(Hero player, NPC opponent, int nextRound) {
         System.out.println("\nEnd of Round " + (nextRound - 1) + " 🔔");
+        Audio.playMusic("AudioFiles/bell.wav");
         pressEnterToContinue();
 
-        // Recover some stamina between rounds
         if (player.getStamina() + 20 <= player.getMaxStamina()) {
             int recoveredStamina = Math.min(20, player.getMaxStamina() - player.getStamina());
             player.setStamina(player.getStamina() + recoveredStamina);
@@ -402,7 +401,7 @@ public class Jogo {
             opponent.setStamina(opponent.getStamina() + 20);
         }
 
-        displayFightStats(player, opponent);  // Show updated stats after recovery
+        displayFightStats(player, opponent);
         pressEnterToContinue();
     }
 
@@ -1076,16 +1075,6 @@ public class Jogo {
         boolean shopping = true;
         while (shopping) {
             System.out.println("\nYou have $" + player.getMoney() + " available.");
-            System.out.println("\nAvailable items:");
-            System.out.println("----------------------------------------");
-
-
-            for (int i = 0; i < availableItems.size(); i++) {
-                System.out.println((i + 1) + ".");
-                availableItems.get(i).showDetails();
-                System.out.println("----------------------------------------");
-            }
-
             System.out.println("\nEnter item number to buy (0 to exit):");
             int choice = getValidInput(0, availableItems.size());
 
@@ -1102,6 +1091,15 @@ public class Jogo {
                     }
                 }
                 pressEnterToContinue();
+                if (shopping && !availableItems.isEmpty()) {
+                    System.out.println("\nAvailable items:");
+                    System.out.println("----------------------------------------");
+                    for (int i = 0; i < availableItems.size(); i++) {
+                        System.out.println((i + 1) + ".");
+                        availableItems.get(i).showDetails();
+                        System.out.println("----------------------------------------");
+                    }
+                }
             }
         }
     }

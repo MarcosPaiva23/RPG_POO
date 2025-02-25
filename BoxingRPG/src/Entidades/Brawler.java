@@ -58,7 +58,7 @@ public class Brawler extends Hero {
                 System.out.println(ConsoleColors.BLUE_BOLD + "You throw everything into a devastating attack for " + specialDamage + " damage!" + ConsoleColors.RESET);
                 break;
 
-            case 3: // Consumable use
+            case 3:
                 if (this.inventory.isEmpty()) {
                     System.out.println("No special moves available!");
                     return;

@@ -23,8 +23,10 @@ public class Vendor {
         initializeStock();
     }
 
+    /**
+     * Método para inicializar o stock do vendedor
+     */
     private void initializeStock() {
-        // Basic gloves (for all)
         MainWeapon basicGloves = new MainWeapon("\uD83E\uDD4A Basic Pro Gloves ", 50, 10, 15);
         basicGloves.addAllowedBoxer("Brawler");
         basicGloves.addAllowedBoxer("CounterPuncher");
@@ -43,7 +45,6 @@ public class Vendor {
         gymGloves.addAllowedBoxer("Tank");
         stock.add(gymGloves);
 
-        // Specialized gloves
         MainWeapon brawlerGloves = new MainWeapon("\uD83E\uDD4A Knockout Artist Gloves", 75, 15, 25);
         brawlerGloves.addAllowedBoxer("Brawler");
         stock.add(brawlerGloves);
@@ -56,7 +57,6 @@ public class Vendor {
         tankGloves.addAllowedBoxer("Tank");
         stock.add(tankGloves);
 
-        // Training tapes (for all)
         TrainingTapes footworkTape = new TrainingTapes("\uD83D\uDCFC Ali's Footwork Masterclass", 60, 0, 0, 0, 15);
         footworkTape.addAllowedBoxer("Brawler");
         footworkTape.addAllowedBoxer("CounterPuncher");
@@ -93,7 +93,6 @@ public class Vendor {
         heavyHandsTape.addAllowedBoxer("Tank");
         stock.add(heavyHandsTape);
 
-        // Combat consumables
         CombatConsumable uppercut = new CombatConsumable("\uD83D\uDC4A Uppercut", 30, 35,
                 SpecialEffectType.NONE, null);
         uppercut.addAllowedBoxer("Brawler");
@@ -221,6 +220,9 @@ public class Vendor {
         return true;
     }
 
+    /**
+     * Método que imprime os itens da loja
+     */
     public void printShop() {
         ArrayList<HeroItem> availableItems = getAvailableItems();
 
