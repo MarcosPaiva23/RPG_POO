@@ -1,11 +1,14 @@
 package Jogo;
 
+import Cores.ConsoleColors;
 import Entidades.*;
 import Itens.HeroItem;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+
+import static java.lang.Thread.sleep;
 
 public class Jogo {
 
@@ -15,7 +18,7 @@ public class Jogo {
     /**
      * Introdução do jogo, que vai levar à criação da nossa personagem.
      */
-    public void startGame() {
+    public void startGame() throws InterruptedException {
         trainer = new Vendor("Coach Miller");
 
         System.out.println("");
@@ -29,10 +32,20 @@ public class Jogo {
         pressEnterToContinue();
 
         System.out.println("You go to bed every night hoping to make it one day. This is the beginning of that story...");
-        pressEnterToContinue();
+        sleep(2000);
+        System.out.println("""
+ █████   ██████   █████  ██ ███    ██ ███████ ████████     ████████ ██   ██ ███████     ██████   ██████  ██████  ███████ ███████ 
+██   ██ ██       ██   ██ ██ ████   ██ ██         ██           ██    ██   ██ ██          ██   ██ ██    ██ ██   ██ ██      ██      
+███████ ██   ███ ███████ ██ ██ ██  ██ ███████    ██           ██    ███████ █████       ██████  ██    ██ ██████  █████   ███████ 
+██   ██ ██    ██ ██   ██ ██ ██  ██ ██      ██    ██           ██    ██   ██ ██          ██   ██ ██    ██ ██      ██           ██ 
+██   ██  ██████  ██   ██ ██ ██   ████ ███████    ██           ██    ██   ██ ███████     ██   ██  ██████  ██      ███████ ███████ 
+                                                                                                                                 
+                                                                                                                                 
+""");
 
-        System.out.println("But first, you need to decide what kind of fighter you are.");
-        pressEnterToContinue();
+
+        System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "But first, you need to decide what kind of fighter you are." + ConsoleColors.RESET);
+
 
         Hero player = createCharacter();
         streetFight(player);
@@ -221,7 +234,7 @@ public class Jogo {
         System.out.println("\n=== FIGHT START ===");
 
         try {
-            Thread.sleep(2000);  // 2 second pause before fight starts
+            sleep(2000);  // 2 second pause before fight starts
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -230,7 +243,7 @@ public class Jogo {
             System.out.println("\n=== ROUND " + currentRound + " ===");
             displayFightStats(player, opponent);
             try {
-                Thread.sleep(1500);
+                sleep(1500);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -238,7 +251,7 @@ public class Jogo {
             for (int turn = 1; turn <= 3 && player.getHp() > 0 && opponent.getHp() > 0; turn++) {
                 System.out.println("\n----- Turn " + turn + " -----");
                 try {
-                    Thread.sleep(1000);
+                    sleep(1000);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
@@ -289,14 +302,14 @@ public class Jogo {
         }
 
         System.out.println("\nYour turn! Choose your action:");
-        System.out.println("1. Normal Attack (" + normalAttackCost + " stamina) 👊");
+        System.out.println("1. 👊 Normal Attack (" + normalAttackCost + " stamina)");
         if (specialAttackAvailable) {
-            System.out.println("2. Special Attack (" + specialAttackCost + " stamina) (Once per fight!) 💥");
+            System.out.println("2. 💥 Special Attack (" + specialAttackCost + " stamina) (Once per fight!)");
         }
         if (!player.getInventory().isEmpty()) {
-            System.out.println("3. Use Special Move \uD83D\uDCA3");
+            System.out.println("3. \uD83D\uDCA3 Use Special Move");
         }
-        System.out.println("4. Rest \uD83D\uDECC\uD83C\uDFFB (Recover 30 stamina)");
+        System.out.println("4. \uD83D\uDECC\uD83C\uDFFB Rest (Recover 30 stamina)");
 
         int choice;
         do {
@@ -505,7 +518,7 @@ public class Jogo {
                     break;
             }
 
-            double reputationMultiplier = 1 + (player.getReputation() * 0.01);
+            double reputationMultiplier = 0.5 + (player.getReputation() * 0.01);
             int moneyGain = (int)(baseMoney * reputationMultiplier);
 
             if (player.getReputation() > 0) {
